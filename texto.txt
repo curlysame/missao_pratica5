@@ -1,0 +1,3 @@
+Esta é a primeira limda de texto.
+Aqui esta a segunda frase.
+E esta é a terceira frase do arquivo
