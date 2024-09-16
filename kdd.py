@@ -6,7 +6,6 @@ def bubble_sort(arr):
         for j in range(0, n - i - 1):
             if arr[j] > arr[j + 1]:
                 arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    return arr
 
 def selection_sort(arr):
     n = len(arr)
@@ -16,48 +15,42 @@ def selection_sort(arr):
             if arr[j] < arr[min_idx]:
                 min_idx = j
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
-    return arr
+    
 
 
-def measure_sorting_time(sort_function, arr):
+def measure_time(sort_function, arr):
     start_time = time.time()
-    sorted_arr = sort.function(arr)
+    sort_function(arr)
     end_time = time.time()
-    execution_time = end_time - start_time
-    return sorted_arr, execution_time
+    return end_time - start_time
 
-palavras_lista = list()
+words = []
+with open('texto.txt', 'r') as file:
+    for line in file:
+        words.extend(line.split()) 
 
-with open("texto2.txt", "r") as arquivo:
-    for linha in arquivo:
-        palavras = linha.split()
-        palavras_lista.extend(palavras)
 
-print("Lista original de palavras:")
-print(palavras_lista)
 
-palavras_bubble = palavras_lista.copy()
-palavras_selection = palavras_lista.copy()
+bubble_arr = words.copy()
+selection_arr = words.copy()
+sort_arr = words.copy()
 
-sorted_bubble, time_bubble = measure_sorting_time(bubble_sort, palavras_bubble)
-print("\nBubble sort:")
-print(bubble_sort)
-print(f"Tempo de execução (Bubble Sort): {time_bubble:.6f} segundos")
 
-sorted_selection, time_selection = measure_sorting_time(selection_sort, palavras_selection)
-print("\nSelection Sort")
-print(sorted_selection)
-print(f"Tempo de exuçaão (selectiom Sort): {time_selection:.6f} segundos")
+bubble_time = measure_time(bubble_sort, bubble_arr)
+print(f"Bubble Sort ordenado: {bubble_arr}")
+print(f"Tempo de execução do Bubble Sort: {bubble_time:.6f} segundos\n")
 
+selection_time = measure_time(selection_sort, selection_arr)
+print(f"Selection Sort ordenado: {selection_arr}")
+print(f"Tempo de execução do Selection Sort: {selection_time:.6f} segundos\n")
 
 start_time = time.time()
-palavras_lista.sort()
+sort_arr.sort()
 end_time = time.time()
-time_sort = end_time - start_time
+sort_time = end_time - start_time
+print(f"Sort nativo ordenado: {sort_arr}")
+print(f"Tempo de execução do sort nativo: {sort_time:.6f} segundos\n")
 
-print("\nSort nativo do Python:")
-print(palavras_lista)
-print(f"Tempo de execução (Sort nativo): {time_sort:.6f} segundos")
-
-with open("texto2.txt", "w") as arquivo_ordenado:
-    arquivo_ordenado.write(" ".join(palavras_lista))
+with open('palavras_ordenadas.txt', 'w') as file:
+    for word in sort_arr:
+        file.write(word + "\n")
